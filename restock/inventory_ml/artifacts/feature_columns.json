@@ -1,0 +1,21 @@
+[
+    "day_of_week",
+    "hour_of_day",
+    "month",
+    "week_of_year",
+    "is_weekend",
+    "quarter",
+    "season_tag_encoded",
+    "rolling_7d_demand",
+    "rolling_30d_demand",
+    "rolling_7d_std",
+    "lag_1d_demand",
+    "lag_7d_demand",
+    "demand_growth_rate",
+    "stock_before_purchase",
+    "stock_ratio",
+    "is_emergency_purchase",
+    "cost_per_unit_zscore",
+    "medicine_category_encoded",
+    "criticality_encoded"
+]
