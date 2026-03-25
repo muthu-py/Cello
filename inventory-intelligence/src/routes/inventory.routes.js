@@ -156,4 +156,27 @@ router.get('/combined-priority', async (req, res) => {
     }
 });
 
+// --- PAYMENT SCHEDULER ENDPOINT ---
+const { runPaymentScheduler } = require('../services/paymentService');
+
+// GET /api/inventory/payment-schedule
+router.get('/payment-schedule', async (req, res) => {
+    try {
+        const payables = await fetchPayables();
+
+        // Predicted daily profits (mock for now; replace with real forecast)
+        const predictedProfits = [2000, 1500, 3000, 2500, 1800];
+        const initialCash = parseFloat(req.query.initial_cash || 0);
+
+        const result = await runPaymentScheduler(payables, predictedProfits, initialCash);
+
+        res.json({
+            success: true,
+            data: result
+        });
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
+
 module.exports = router;

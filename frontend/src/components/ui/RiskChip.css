@@ -1,0 +1,36 @@
+.risk-chip {
+    font-family: var(--font-condensed);
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    padding: 2px 7px;
+    border-radius: var(--radius-chip);
+    display: inline-block;
+    line-height: 1.4;
+    white-space: nowrap;
+}
+
+.risk-chip--rust {
+    background: var(--rust-bg);
+    border: 1px solid var(--rust-border);
+    color: var(--rust-text);
+}
+
+.risk-chip--amber {
+    background: var(--amber-bg);
+    border: 1px solid var(--amber-border);
+    color: var(--amber-text);
+}
+
+.risk-chip--green {
+    background: var(--green-bg);
+    border: 1px solid var(--green-border);
+    color: var(--green-text);
+}
+
+.risk-chip--neutral {
+    background: var(--neutral-bg);
+    border: 1px solid var(--neutral-border);
+    color: var(--neutral-text);
+}

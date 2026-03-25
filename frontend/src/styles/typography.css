@@ -1,0 +1,25 @@
+.page-title {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 27px;
+    font-weight: 400;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.mono {
+    font-family: var(--font-mono);
+}
+
+.condensed {
+    font-family: var(--font-condensed);
+}
+
+.label-mono {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-muted);
+}

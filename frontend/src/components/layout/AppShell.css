@@ -1,0 +1,6 @@
+.app-shell__main {
+    margin-top: var(--topbar-h);
+    margin-left: var(--sidebar-w);
+    padding: 28px 32px;
+    min-height: calc(100vh - var(--topbar-h));
+}

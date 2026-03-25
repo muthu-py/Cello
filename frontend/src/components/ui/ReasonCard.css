@@ -1,0 +1,14 @@
+.reason-card {
+    border-left: 4px solid var(--rust);
+    border-radius: 0 var(--radius-panel) var(--radius-panel) 0;
+    background: var(--bg-panel);
+    padding: 14px 18px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-primary);
+    border-top: var(--border-inner);
+    border-right: var(--border-inner);
+    border-bottom: var(--border-inner);
+}

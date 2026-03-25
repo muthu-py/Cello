@@ -1,0 +1,44 @@
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 2px 8px;
+    border-radius: var(--radius-chip);
+}
+
+.status-pill__dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+}
+
+.status-pill--green {
+    color: var(--green-text);
+    background: var(--green-bg);
+}
+
+.status-pill--green .status-pill__dot {
+    background: var(--green);
+}
+
+.status-pill--rust {
+    color: var(--rust-text);
+    background: var(--rust-bg);
+}
+
+.status-pill--rust .status-pill__dot {
+    background: var(--rust);
+}
+
+.status-pill--amber {
+    color: var(--amber-text);
+    background: var(--amber-bg);
+}
+
+.status-pill--amber .status-pill__dot {
+    background: var(--amber);
+}

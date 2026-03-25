@@ -23,7 +23,9 @@ async function fetchPayables() {
             name: item.name,
             priority_score: item.priority_score,
             flexibility: item.flexibility,
-            reason: item.reason
+            reason: item.reason,
+            accumulated_amount: item.accumulated_amount,
+            base_amount: item.base_amount
         }));
     } catch (err) {
         console.warn('⚠ Payables fetch failed, using fallback:', err.message);

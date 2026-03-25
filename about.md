@@ -27,8 +27,11 @@ Cello/
 │       ├── routes/inventory.routes.js
 │       ├── engine/
 │       │   ├── decisionEngine.js
-│       │   └── integrationEngine.js
-│       ├── services/payablesService.js
+│       │   ├── integrationEngine.js
+│       │   └── paymentScheduler.js
+│       ├── services/
+│       │   ├── payablesService.js
+│       │   └── paymentService.js
 │       ├── ml/demandPredictor.js
 │       ├── simulation/simulate.js
 │       ├── utils/
@@ -301,14 +304,45 @@ Endpoints:
   - Returns unified priority queue sorted by flexibility rules + score
   - Debug logs: inventory count, payables count, combined count
 
-### 3.1.11 Utility helpers
+- `GET /api/inventory/payment-schedule`
+  - Fetches payables from Finance Service
+  - Runs the hybrid payment scheduler against predicted daily profits
+  - Query param: `initial_cash` (default 0)
+  - Returns day-by-day payment schedule, unpaid list, and summary
+
+### 3.1.11 Hybrid payment scheduler
+File: `src/engine/paymentScheduler.js`
+
+Purpose:
+- Assigns each payable to a specific day based on predicted daily cash inflow and flexibility rules.
+- Deterministic and explainable — no AI/ML calls.
+
+Algorithm (3-phase per day):
+1. **Phase 1 — LOW payments (full only):** Iterate all LOW-flexibility payments. If cash ≥ amount, pay in full. Never partial.
+2. **Phase 2 — Guard:** If any LOW payment is still payable (cash ≥ its amount), block all MED/HIGH allocation. Hold cash for LOW.
+3. **Phase 3 — MED/HIGH allocation:** Only if no LOW is payable. Pay in full or partial. Partial payments allowed.
+
+Key constraints:
+- LOW → full payment only, never partial
+- LOW always checked before MED/HIGH
+- MED/HIGH only get cash if no LOW payment is currently affordable
+- Cash never goes negative
+
+### 3.1.12 Payment service wrapper
+File: `src/services/paymentService.js`
+
+Purpose:
+- Transforms raw payables API data into the format expected by `paymentScheduler.js`.
+- Maps `accumulated_amount` or `base_amount` to the scheduler's `amount` field.
+
+### 3.1.13 Utility helpers
 File: `src/utils/formatters.js`
 - `formatDays(days)` → compact labels (`STOCKOUT NOW`, `~1 day`, etc.)
 - `formatDaysVerbose(days)` → sentence-friendly phrase used in reasons
 
-### 3.1.12 Operational behavior summary
+### 3.1.14 Operational behavior summary
 - Service expects MongoDB reachable via `MONGO_URI`.
-- Integration endpoint requires the Finance Service (`snu_hacks`) running on port 5002.
+- Integration and scheduler endpoints require the Finance Service (`snu_hacks`) running on port 5002.
 - Simulation is destructive to module collections (full clear then reseed).
 - No test suite present in this module.
 
@@ -518,7 +552,9 @@ Seeds three demonstrative cases, including:
 **Cross-service integration:**
 - `inventory-intelligence` now includes an **Integration Engine** (`integrationEngine.js`) that fetches payables from `snu_hacks` via HTTP and merges them with inventory priorities using flexibility-based override rules.
 - The integration is accessible via `GET /api/inventory/combined-priority`.
-- If the Finance Service is unavailable, the endpoint gracefully degrades to inventory-only results.
+- A **Hybrid Payment Scheduler** (`paymentScheduler.js`) consumes payables and allocates predicted daily cash inflow using strict flexibility rules (LOW = full-only first, MED/HIGH get partials with remaining cash).
+- The scheduler is accessible via `GET /api/inventory/payment-schedule`.
+- If the Finance Service is unavailable, both endpoints gracefully degrade to empty results.
 
 ## 5. Build/run commands
 
@@ -561,6 +597,7 @@ npm start
 - `GET /api/inventory/weights/history`
 - `GET /api/inventory/simulation/status`
 - `GET /api/inventory/combined-priority`
+- `GET /api/inventory/payment-schedule?initial_cash=0`
 
 ### Finance service
 - `GET /health`
@@ -595,7 +632,9 @@ npm start
 - `src/routes/inventory.routes.js`: inventory API routes + combined-priority integration endpoint.
 - `src/engine/decisionEngine.js`: core ranking, quantity logic, and flexibility classification.
 - `src/engine/integrationEngine.js`: cross-domain merge engine with flexibility-based comparator.
+- `src/engine/paymentScheduler.js`: hybrid payment scheduler with LOW-first full-only logic.
 - `src/services/payablesService.js`: external Finance API fetch with graceful fallback.
+- `src/services/paymentService.js`: data transformation wrapper for the payment scheduler.
 - `src/ml/demandPredictor.js`: statistical demand predictor.
 - `src/simulation/simulate.js`: synthetic data generator.
 - `src/utils/formatters.js`: stock timing string formatters.

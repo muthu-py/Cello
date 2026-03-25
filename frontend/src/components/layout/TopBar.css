@@ -1,0 +1,54 @@
+.topbar {
+    height: var(--topbar-h);
+    background: var(--bg-topbar);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+
+.topbar__brand {
+    display: flex;
+    align-items: baseline;
+    gap: 0;
+}
+
+.topbar__logo {
+    font-family: var(--font-condensed);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-inverse);
+    letter-spacing: 0.04em;
+}
+
+.topbar__dot {
+    font-family: var(--font-condensed);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--rust);
+}
+
+.topbar__ops {
+    font-family: var(--font-condensed);
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text-ghost);
+    letter-spacing: 0.04em;
+}
+
+.topbar__right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.topbar__time {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-ghost);
+}

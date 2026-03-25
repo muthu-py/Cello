@@ -1,0 +1,137 @@
+.forecast-page {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.forecast-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.medicine-select {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 6px 10px;
+    border: 1px solid #D8D3C9;
+    border-radius: var(--radius-chip);
+    background: var(--bg-panel);
+    color: var(--text-primary);
+}
+
+.chart-wrap {
+    background: var(--bg-panel);
+    border: var(--border-default);
+    border-radius: var(--radius-panel);
+    padding: 20px;
+}
+
+.chart-legend {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 12px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.chart-legend__item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.chart-legend__line {
+    display: inline-block;
+    width: 16px;
+    height: 2px;
+}
+
+.chart-legend__line--rust {
+    background: var(--rust);
+}
+
+.chart-legend__line--gray {
+    background: #C4C0B8;
+}
+
+.forecast-panels {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.panel {
+    background: var(--bg-panel);
+    border: var(--border-default);
+    border-radius: var(--radius-panel);
+    padding: 16px;
+}
+
+.snapshot-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.snapshot-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+    border-bottom: var(--border-row);
+}
+
+.snapshot-label {
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.reliability-bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.reliability-track {
+    width: 48px;
+    height: 4px;
+    background: #EBE8E2;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.reliability-fill {
+    height: 100%;
+    background: var(--green);
+    border-radius: 2px;
+}
+
+.breakdown-table {
+    width: 100%;
+}
+
+.breakdown-table th {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 6px 8px;
+    border-bottom: var(--border-default);
+}
+
+.breakdown-table td {
+    padding: 6px 8px;
+    border-bottom: var(--border-row);
+    font-size: 12px;
+    text-transform: capitalize;
+    color: var(--text-secondary);
+}

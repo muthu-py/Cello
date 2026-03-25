@@ -1,0 +1,9 @@
+nohup: ignoring input
+[dotenv@17.3.1] injecting env (2) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+[dotenv@17.3.1] injecting env (0) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+
+🚀 Server running on port 3000
+📦 Module: Hospital Inventory Intelligence
+🔗 Endpoint: http://localhost:3000/api/inventory
+  
+✓ MongoDB Connected

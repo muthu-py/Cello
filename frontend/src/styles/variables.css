@@ -1,0 +1,52 @@
+:root {
+    /* Surfaces */
+    --bg-page: #F5F2EC;
+    --bg-panel: #FFFFFF;
+    --bg-sidebar: #EDEAE3;
+    --bg-topbar: #1A1814;
+    --bg-header: #FAFAF8;
+
+    /* Borders */
+    --border-default: 1px solid #D8D3C9;
+    --border-inner: 1px solid #EBE8E2;
+    --border-row: 1px solid #F0EDE7;
+
+    /* Text */
+    --text-primary: #1A1814;
+    --text-secondary: #5C584F;
+    --text-muted: #9E998F;
+    --text-ghost: #C4C0B8;
+    --text-inverse: #F5F2EC;
+
+    /* Signal colors */
+    --rust: #C4622D;
+    --rust-bg: #FAE8E0;
+    --rust-border: #EFBDAC;
+    --rust-text: #7A2E10;
+
+    --amber: #B8952A;
+    --amber-bg: #FDF4E0;
+    --amber-border: #F0DFA0;
+    --amber-text: #7A5A10;
+
+    --green: #4A7C59;
+    --green-bg: #EBF4EE;
+    --green-border: #AACFB8;
+    --green-text: #2E5A3A;
+
+    --neutral-bg: #F0EDE7;
+    --neutral-border: #D8D3C9;
+    --neutral-text: #6B665E;
+
+    /* Typography */
+    --font-serif: 'Instrument Serif', Georgia, serif;
+    --font-condensed: 'Barlow Condensed', sans-serif;
+    --font-body: 'Barlow', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+
+    /* Layout */
+    --sidebar-w: 200px;
+    --topbar-h: 44px;
+    --radius-panel: 3px;
+    --radius-chip: 2px;
+}
