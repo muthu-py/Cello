@@ -17,6 +17,9 @@ app.use(express.json());
 // Routes
 app.use('/api/finance/payables', payableRoutes);
 app.get('/api/finance/due-priority', getDuePriority);
+app.get('/api/finance/service-health', (req, res) => {
+  res.status(200).json({ ok: true, service: 'finance-engine' });
+});
 
 // Database connection
 const mongoURI = process.env.MONGO_URI;

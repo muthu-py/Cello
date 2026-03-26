@@ -1,0 +1,50 @@
+@import 'tailwindcss';
+
+@theme {
+    --color-primary: var(--sys-primary);
+    --color-on-primary: var(--sys-on-primary);
+    --color-primary-container: var(--sys-primary-container);
+    --color-on-primary-container: var(--sys-on-primary-container);
+    --color-secondary: var(--sys-secondary);
+    --color-on-secondary: var(--sys-on-secondary);
+    --color-secondary-container: var(--sys-secondary-container);
+    --color-on-secondary-container: var(--sys-on-secondary-container);
+    --color-tertiary: var(--sys-tertiary);
+    --color-on-tertiary: var(--sys-on-tertiary);
+    --color-tertiary-container: var(--sys-tertiary-container);
+    --color-on-tertiary-container: var(--sys-on-tertiary-container);
+    --color-surface: var(--sys-surface);
+    --color-on-surface: var(--sys-on-surface);
+    --color-surface-variant: var(--sys-surface-variant);
+    --color-on-surface-variant: var(--sys-on-surface-variant);
+    --color-outline: var(--sys-outline);
+    --color-outline-variant: var(--sys-outline-variant);
+    --color-surface-container-lowest: var(--sys-surface-container-lowest);
+    --color-surface-container-low: var(--sys-surface-container-low);
+    --color-surface-container: var(--sys-surface-container);
+    --color-surface-container-high: var(--sys-surface-container-high);
+    --color-surface-container-highest: var(--sys-surface-container-highest);
+    --color-background: var(--sys-background);
+    --color-on-background: var(--sys-on-background);
+
+    --font-headline: var(--font-serif);
+    --font-label: var(--font-condensed);
+    --font-body: var(--font-body);
+    --font-mono: var(--font-mono);
+
+    --radius-none: 0px;
+    --radius-lg: 0px;
+    --radius-xl: 0px;
+    --radius-full: 9999px;
+}
+
+@utility no-scrollbar {
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}

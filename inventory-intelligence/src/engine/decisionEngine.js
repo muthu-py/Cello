@@ -207,6 +207,8 @@ async function runDecisionEngine() {
             total_cost: parseFloat((idealQty * r.cost_per_unit).toFixed(2)),
             expiry_days: r.expiry_days,
             supplier_name: r.supplier_name,
+            reliability: parseFloat(r.reliability.toFixed(3)),
+            lead_time_days: r.lead_time_days,
             effective_lead_time_raw: parseFloat(r.effective_lead_time.toFixed(2)),
             effective_lead_time: formatDays(r.effective_lead_time),
             confidence: r.confidence,

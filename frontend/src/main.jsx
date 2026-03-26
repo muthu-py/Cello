@@ -4,9 +4,10 @@ import App from './App';
 import './styles/variables.css';
 import './styles/reset.css';
 import './styles/typography.css';
+import './styles/app.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <React.StrictMode>
-        <App />
-    </React.StrictMode>
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
 );

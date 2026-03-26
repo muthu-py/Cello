@@ -1,18 +1,43 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { INVENTORY_API } from '../config/api';
+import { useEffect, useState, useCallback } from 'react';
+import { inventoryApi } from '../config/api';
 
-export default function useWeights() {
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const fetch = () => {
-        setLoading(true);
-        axios.get(`${INVENTORY_API}/api/inventory/weights/history`)
-            .then(r => setData(r.data?.data || []))
-            .catch(e => setError(e.message))
-            .finally(() => setLoading(false));
+export function useWeights() {
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [tick, setTick] = useState(0);
+
+  const refetch = useCallback(() => setTick((t) => t + 1), []);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function run() {
+      setLoading(true);
+      setError(false);
+      try {
+        const res = await inventoryApi.get('/api/inventory/weights/history');
+        const ok = res.data?.success;
+        const list = res.data?.data ?? null;
+        if (!cancelled) {
+          setData(ok ? list : null);
+          setError(!ok);
+        }
+      } catch {
+        if (!cancelled) {
+          setData(null);
+          setError(true);
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+
+    run();
+    return () => {
+      cancelled = true;
     };
-    useEffect(fetch, []);
-    return { data, loading, error, refetch: fetch };
+  }, [tick]);
+
+  return { data, error, loading, refetch };
 }

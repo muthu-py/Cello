@@ -1,3 +1,19 @@
+/**
+ * @param {{ children: React.ReactNode }} props
+ */
 export default function SectionLabel({ children }) {
-    return <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.14em', color: 'var(--text-muted)', marginBottom: '10px' }}>{children}</h3>;
+  return (
+    <div
+      style={{
+        fontFamily: 'var(--font-mono)',
+        fontSize: 8,
+        letterSpacing: '0.14em',
+        textTransform: 'uppercase',
+        color: 'var(--text-muted)',
+        marginBottom: 10,
+      }}
+    >
+      {children}
+    </div>
+  );
 }

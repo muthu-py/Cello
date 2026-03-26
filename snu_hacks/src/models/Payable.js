@@ -15,6 +15,12 @@ const payableSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  /** Invoice / PO / payroll batch reference (displayed in dashboards) */
+  reference: {
+    type: String,
+    trim: true,
+    default: ''
+  },
   amount: {
     type: Number,
     required: true

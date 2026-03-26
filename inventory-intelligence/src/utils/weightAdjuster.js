@@ -6,6 +6,7 @@ const EngineWeight = require('../models/engine_weights.model');
 const DemandHistory = require('../models/demand_history.model');
 const Medicine = require('../models/medicines.model');
 const Inventory = require('../models/inventory.model');
+const Supplier = require('../models/suppliers.model');
 
 /**
  * Evaluates performance and adjusts engine weights if necessary.

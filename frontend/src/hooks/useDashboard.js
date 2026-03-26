@@ -1,16 +1,40 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { INVENTORY_API } from '../config/api';
+import { useEffect, useState } from 'react';
+import { inventoryApi } from '../config/api';
 
-export default function useDashboard() {
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    useEffect(() => {
-        axios.get(`${INVENTORY_API}/api/inventory/dashboard`)
-            .then(r => setData(r.data?.summary || null))
-            .catch(e => setError(e.message))
-            .finally(() => setLoading(false));
-    }, []);
-    return { data, loading, error };
+export function useDashboard() {
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function run() {
+      setLoading(true);
+      setError(false);
+      try {
+        const res = await inventoryApi.get('/api/inventory/dashboard');
+        const ok = res.data?.success;
+        const summary = res.data?.summary ?? null;
+        if (!cancelled) {
+          setData(ok ? summary : null);
+          setError(!ok);
+        }
+      } catch {
+        if (!cancelled) {
+          setData(null);
+          setError(true);
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+
+    run();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  return { data, error, loading };
 }

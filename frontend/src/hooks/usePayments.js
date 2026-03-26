@@ -1,18 +1,33 @@
-import { useState } from 'react';
-import axios from 'axios';
-import { INVENTORY_API } from '../config/api';
+import { useCallback, useEffect, useState } from 'react';
+import { inventoryApi } from '../config/api';
 
-export default function usePayments() {
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const fetch = (initialCash = 0) => {
-        setLoading(true);
-        setError(null);
-        axios.get(`${INVENTORY_API}/api/inventory/payment-schedule?initial_cash=${initialCash}`)
-            .then(r => setData(r.data?.data || null))
-            .catch(e => setError(e.message))
-            .finally(() => setLoading(false));
-    };
-    return { data, loading, error, fetch };
+export function usePayments() {
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const load = useCallback(async (initialCash = 0) => {
+    setLoading(true);
+    setError(false);
+    try {
+      const res = await inventoryApi.get('/api/inventory/payment-schedule', {
+        params: { initial_cash: initialCash },
+      });
+      const ok = res.data?.success;
+      const payload = res.data?.data ?? null;
+      setData(ok ? payload : null);
+      setError(!ok);
+    } catch {
+      setData(null);
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    load(0);
+  }, [load]);
+
+  return { data, error, loading, load };
 }

@@ -20,12 +20,17 @@ async function fetchPayables() {
 
         return res.data.map(item => ({
             id: item.id,
+            type: item.type,
             name: item.name,
+            reference: item.reference || '',
             priority_score: item.priority_score,
             flexibility: item.flexibility,
             reason: item.reason,
             accumulated_amount: item.accumulated_amount,
-            base_amount: item.base_amount
+            base_amount: item.base_amount,
+            remaining_minutes: item.remaining_minutes,
+            risk_level: item.risk_level,
+            status: item.status
         }));
     } catch (err) {
         console.warn('⚠ Payables fetch failed, using fallback:', err.message);

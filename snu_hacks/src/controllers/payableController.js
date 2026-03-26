@@ -76,10 +76,12 @@ export const getDuePriority = async (req, res) => {
         id: payable._id,
         type: payable.type,
         name: payable.name,
+        reference: payable.reference || '',
         base_amount: payable.amount,
         accumulated_amount: payable.accumulated_amount,
         remaining_minutes: payable.remaining_minutes,
         flexibility: payable.flexibility,
+        status: payable.status,
         raw_priority,
         risk_level,
         reason
@@ -97,10 +99,12 @@ export const getDuePriority = async (req, res) => {
         id: item.id,
         type: item.type,
         name: item.name,
+        reference: item.reference,
         base_amount: item.base_amount,
         accumulated_amount: item.accumulated_amount,
         remaining_minutes: item.remaining_minutes,
         flexibility: item.flexibility,
+        status: item.status,
         priority_score: parseFloat(softmax_score.toFixed(6)), // Softmaxed Output Overwrite
         risk_level: item.risk_level, // Unchanged from raw logic classification
         reason: item.reason

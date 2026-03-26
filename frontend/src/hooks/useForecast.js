@@ -1,18 +1,48 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { INVENTORY_API } from '../config/api';
+import { useEffect, useState } from 'react';
+import { inventoryApi } from '../config/api';
 
-export default function useForecast(medicineId) {
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    useEffect(() => {
-        if (!medicineId) return;
-        setLoading(true);
-        axios.get(`${INVENTORY_API}/api/inventory/medicine/${medicineId}/forecast`)
-            .then(r => setData(r.data))
-            .catch(e => setError(e.message))
-            .finally(() => setLoading(false));
-    }, [medicineId]);
-    return { data, loading, error };
+export function useForecast(medicineId) {
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!medicineId) {
+      setData(null);
+      setError(false);
+      setLoading(false);
+      return;
+    }
+
+    let cancelled = false;
+
+    async function run() {
+      setLoading(true);
+      setError(false);
+      try {
+        const res = await inventoryApi.get(
+          `/api/inventory/medicine/${encodeURIComponent(medicineId)}/forecast`
+        );
+        const ok = res.data?.success;
+        if (!cancelled) {
+          setData(ok ? res.data : null);
+          setError(!ok);
+        }
+      } catch {
+        if (!cancelled) {
+          setData(null);
+          setError(true);
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+
+    run();
+    return () => {
+      cancelled = true;
+    };
+  }, [medicineId]);
+
+  return { data, error, loading };
 }

@@ -1,8 +1,23 @@
-export default function MonoData({ children, variant = '' }) {
-    const style = { fontFamily: 'var(--font-mono)', fontSize: '11px' };
-    if (variant === 'muted') style.color = 'var(--text-muted)';
-    if (variant === 'rust') style.color = 'var(--rust)';
-    if (variant === 'amber') style.color = 'var(--amber)';
-    if (variant === 'green') style.color = 'var(--green)';
-    return <span style={style}>{children}</span>;
+/**
+ * @param {{ children: React.ReactNode, variant?: 'default'|'muted'|'rust' }} props
+ */
+export default function MonoData({ children, variant = 'default' }) {
+  const color =
+    variant === 'muted'
+      ? 'var(--text-muted)'
+      : variant === 'rust'
+        ? 'var(--rust-text)'
+        : 'var(--text-primary)';
+
+  return (
+    <span
+      style={{
+        fontFamily: 'var(--font-mono)',
+        fontSize: 11,
+        color,
+      }}
+    >
+      {children}
+    </span>
+  );
 }

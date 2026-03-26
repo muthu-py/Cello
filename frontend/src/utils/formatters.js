@@ -1,20 +1,47 @@
-export function formatCurrency(n) {
-    if (n == null) return '—';
-    return '₹' + Number(n).toLocaleString('en-IN');
+/**
+ * Indian numbering + ₹ prefix
+ * @param {number} n
+ */
+export function formatInr(n) {
+  const v = Number(n);
+  if (Number.isNaN(v)) return '₹0';
+  return `₹${v.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`;
 }
 
-export function formatDays(d) {
-    if (d == null) return '—';
-    if (d <= 0) return 'STOCKOUT NOW';
-    if (d < 1) return `~${Math.round(d * 24)}h`;
-    if (d < 2) return '~1 day';
-    return `~${Math.round(d)} days`;
+/**
+ * @param {number} days
+ * @returns {{ text: string, tone: 'rust' | 'danger' | 'warn' | 'muted' }}
+ */
+/**
+ * @param {number | null | undefined} remainingMinutes
+ * @param {string} [status]
+ */
+export function formatPayableDue(remainingMinutes, status) {
+  const overdue = status === 'overdue' || (remainingMinutes != null && remainingMinutes < 0);
+  if (overdue) {
+    return { text: 'OVERDUE', tone: 'rust' };
+  }
+  if (remainingMinutes == null) {
+    return { text: '—', tone: 'muted' };
+  }
+  const days = remainingMinutes / 1440;
+  if (days < 1) {
+    const h = Math.max(1, Math.round(remainingMinutes / 60));
+    return { text: `Due ~${h}h`, tone: 'danger' };
+  }
+  return { text: `Due ~${Math.round(days)}d`, tone: 'warn' };
 }
 
-export function formatDaysColor(d) {
-    if (d == null) return 'muted';
-    if (d <= 0) return 'rust';
-    if (d < 1) return 'rust';
-    if (d < 3) return 'amber';
-    return 'green';
+export function formatStockoutLabel(days) {
+  if (days <= 0) {
+    return { text: 'STOCKOUT NOW', tone: 'rust' };
+  }
+  if (days < 1) {
+    const h = Math.round(days * 24);
+    return { text: `~${h}h`, tone: 'danger' };
+  }
+  if (days < 2) {
+    return { text: '~1 day', tone: 'warn' };
+  }
+  return { text: `~${Math.round(days)} days`, tone: 'muted' };
 }
